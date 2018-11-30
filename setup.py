@@ -25,7 +25,7 @@ DESCRIPTION = "QUANTAXIS OTGBroker:QUANTAXIS OPEN_TRADE_GATEWAY BROKER"
 KEYWORDS = ["quantaxis", "quant", "finance", "Backtest", 'Framework']
 AUTHOR_EMAIL = "yutiansut@qq.com"
 AUTHOR = 'yutiansut'
-URL = "https://gitee.com/yutiansut/QAOTGBROKER"
+URL = "https://gitee.com/yutiansut/QAOTGBROKERS"
 
 
 LICENSE = "MIT"
