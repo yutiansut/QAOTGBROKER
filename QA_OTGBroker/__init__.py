@@ -87,6 +87,7 @@ class ORDER_TYPE():
     EXECUTE = 'EXECUTE'
     QUOTE = 'QUOTE'
 
+
 def login(name='131176', password='qchl1234', broker='simnow24'):
     return json.dumps({
         "aid": "req_login",
@@ -123,40 +124,6 @@ def on_open(ws):
     thread.start_new_thread(run, ())
 
 
-def on_open2(ws):
-    def run(*args):
-        acc2 = '106184'
-        login_2 = login(acc2, '930426')
-        QA.QA_util_log_info(login_2)
-        ws.send(login_2)
-        time.sleep(1)
-        ws.send(peek())
-
-        time.sleep(2)
-        ws.send(send_order(acc2, 'BUY'))
-        time.sleep(10)
-        ws.close()
-        print("thread terminating...")
-    thread.start_new_thread(run, ())
-
-
-def on_open3(ws):
-    def run(*args):
-        acc3 = '071907'
-        login_3 = login(acc3, 'wow111000')
-        QA.QA_util_log_info(login_3)
-        ws.send(login_3)
-        time.sleep(1)
-        ws.send(peek())
-        time.sleep(2)
-        ws.send(send_order(acc3, 'SELL'))
-
-        time.sleep(10)
-        ws.close()
-        print("thread terminating...")
-    thread.start_new_thread(run, ())
-
-
 if __name__ == "__main__":
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp("ws://www.yutiansut.com:7988",
@@ -165,17 +132,4 @@ if __name__ == "__main__":
                                 on_close=on_close)
     ws.on_open = on_open
 
-    ws2 = websocket.WebSocketApp("ws://www.yutiansut.com:7988",
-                                 on_message=on_message,
-                                 on_error=on_error,
-                                 on_close=on_close)
-    ws2.on_open = on_open2
-
-    ws3 = websocket.WebSocketApp("ws://www.yutiansut.com:7988",
-                                 on_message=on_message,
-                                 on_error=on_error,
-                                 on_close=on_close)
-    ws3.on_open = on_open3
     ws.run_forever()
-    ws2.run_forever()
-    ws3.run_forever()
