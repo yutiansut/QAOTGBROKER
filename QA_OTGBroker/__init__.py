@@ -8,7 +8,7 @@ except ImportError:
 import time
 
 
-def send_order(account_cookie, order_direction='BUY', order_offset='OPEN', volume=1, order_id=False, code='rb1905', exchange_id='SHFE'):
+def send_order(account_cookie, order_direction='BUY', order_offset='OPEN', volume=1, order_id=False, code='rb1905', exchange_id='SHFE', price=3925):
     """[summary]
 
     Arguments:
@@ -39,7 +39,7 @@ def send_order(account_cookie, order_direction='BUY', order_offset='OPEN', volum
         "offset":  order_offset,
         "volume":  volume,                             # //必填, 下单手数
         "price_type": "LIMIT",  # //必填, 报单价格类型
-        "limit_price": 3528,  # //当 price_type == LIMIT 时需要填写此字段, 报单价格
+        "limit_price": price,  # //当 price_type == LIMIT 时需要填写此字段, 报单价格
         "volume_condition": "ANY",
         "time_condition": "GFD",
     })
