@@ -192,7 +192,7 @@ Order
   "direction": "BUY",                       //下单方向
   "offset": "OPEN",                         //开平标志
   "volume_orign": 6,                        //总报单手数
-  "price_type": "LIMIT",                    //指令类型
+  "price_type": "LIMIT",                    //指令类型, ACTIVE=对价下单, PASSIVE=挂价下单
   "limit_price": 45000,                     //委托价格, 仅当 price_type = LIMIT 时有效
   "time_condition":   "GTD",                  //时间条件
   "volume_condition": "ANY",                //数量条件
