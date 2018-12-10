@@ -82,13 +82,17 @@ def peek():
         })
 
 
-def login(name='131176', password='qchl1234', broker='simnow24'):
+def login(name='131176', password='qchl1234', broker='simnow'):
     return json.dumps({
         "aid": "req_login",
         "bid": str(broker),
         "user_name": str(name),
         "password": str(password),
     })
+
+
+def ping(ws):
+    return ws.ping()
 
 
 """3种
@@ -384,6 +388,16 @@ def on_message(ws, message):
     QA.QA_util_log_info(message)
 
 
+def on_ping(ws, message):
+    print('ping')
+    QA.QA_util_log_info(message)
+
+
+def on_pong(ws, message):
+    print('pong')
+    QA.QA_util_log_info(message)
+
+
 def on_error(ws, error):
     print(error)
 
@@ -395,12 +409,16 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         acc1 = '131176'
-        login_1 = login(acc1, 'qchl1234')
+        login_1 = login(acc1, 'qchl123456')
         QA.QA_util_log_info(login_1)
         ws.send(login_1)
         time.sleep(1)
         ws.send(peek())
-        ws.send(send_order(acc1, 'BUY'))
+        for i in range(100):
+            ws.sock.ping('QUANTAXIS')
+            # ws.sock.pong('hi')
+            time.sleep(1)
+        #ws.send(send_order(acc1, 'BUY'))
         time.sleep(20)
         ws.close()
         print("thread terminating...")
@@ -410,9 +428,11 @@ def on_open(ws):
 if __name__ == "__main__":
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp("ws://www.yutiansut.com:7988",
+                                on_pong=on_pong,
                                 on_message=on_message,
                                 on_error=on_error,
                                 on_close=on_close)
     ws.on_open = on_open
+    ws.on_ping = on_ping
 
-    ws.run_forever()
+    ws.run_forever(ping_interval=0)
