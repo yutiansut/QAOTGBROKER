@@ -391,6 +391,7 @@ def on_message(ws, message):
 def on_ping(ws, message):
     print('ping')
     QA.QA_util_log_info(message)
+    ws.pong(message)
 
 
 def on_pong(ws, message):
