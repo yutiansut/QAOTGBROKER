@@ -48,9 +48,13 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
     time.sleep(1)
     try: 
         print('send query bank again')
-        ws.send(querybank(account_cookie=acc, password=capitalpassword,
-                    bankid=bankid, bankpassword=bankpassword))
-
+        res = querybank(account_cookie=acc, password=capitalpassword,
+                    bankid=bankid, bankpassword=bankpassword)
+        print(res)
+        
+        ws.send(res)
+        print('send')
+        ws.send(peek())
     except:
         pass
 
