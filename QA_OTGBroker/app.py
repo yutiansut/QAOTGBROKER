@@ -5,7 +5,7 @@ import websocket
 import time
 import threading
 import click
-
+import QUANTAXIS as QA
 from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek
 
 def on_message(ws, message):
