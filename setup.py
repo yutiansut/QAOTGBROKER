@@ -44,7 +44,7 @@ setup(
     install_requires=['websocket-client', 'quantaxis>=1.1.10.dev2'],
     entry_points={
         'console_scripts': [
-            'QAOTG_test=quantaxis_otgbroker.app:app'
+            'QAOTG_test=QA_OTGBroker.app:app'
         ]
     },
     keywords=KEYWORDS,
