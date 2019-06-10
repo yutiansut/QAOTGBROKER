@@ -54,7 +54,6 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         
         ws.send(res)
         print('send')
-        ws.send(peek())
     except:
         pass
 
