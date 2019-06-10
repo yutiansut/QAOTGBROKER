@@ -33,17 +33,17 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         def run():
             ws.send(login(
                 name=acc, password=password, broker=broker))
+            ws.send(peek())
+            ws.send(querybank(account_cookie=acc, password=capitalpassword,
+                        bankid=bankid, bankpassword=bankpassword))
         threading.Thread(target=run, daemon=False).start()
     
     ws.on_open = _onopen
 
     threading.Thread(target=ws.run_forever, name='sub_websock {}'.format(
-            acc), daemon=True).start()
+            acc), daemon=False).start()
 
-    ws.send(peek())
     
-    ws.send(querybank(account_cookie=acc, password=capitalpassword,
-                        bankid=bankid, bankpassword=bankpassword))
     time.sleep(1)
     for i in range(100):
         ws.sock.ping('QUANTAXIS')
