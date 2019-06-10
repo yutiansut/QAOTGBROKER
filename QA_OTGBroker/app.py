@@ -20,7 +20,9 @@ def on_message(ws, message):
 @click.option('--broker', default='simnow')
 @click.option('--bankid', default='')
 @click.option('--bankpassword', default='')
-def app(acc, password, wsuri, broker, bankid, bankpassword):
+@click.option('--bankid', default='')
+@click.option('--capitalpassword', default='')
+def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
     ws = websocket.WebSocketApp(wsuri,
                                 on_pong=on_pong,
                                 on_message=on_message,
@@ -40,9 +42,10 @@ def app(acc, password, wsuri, broker, bankid, bankpassword):
 
     ws.send(peek())
     
-    ws.send(querybank(account_cookie=acc, password=password,
+    ws.send(querybank(account_cookie=acc, password=capitalpassword,
                         bankid=bankid, bankpassword=bankpassword))
     time.sleep(1)
     for i in range(100):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
+    ws.close()
