@@ -396,6 +396,7 @@ class ORDER_TYPE():
 
 def on_message(ws, message):
     QA.QA_util_log_info(message)
+    #ws.send(peek())
 
 
 def on_ping(ws, message):

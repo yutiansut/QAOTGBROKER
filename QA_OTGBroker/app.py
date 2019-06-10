@@ -6,6 +6,13 @@ import time
 import threading
 import click
 
+from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek
+
+def on_message(ws, message):
+    QA.QA_util_log_info(message)
+    ws.send(peek())
+
+
 @click.command()
 @click.option('--acc', default='133496')
 @click.option('--password', default='QCHL1234')
@@ -25,6 +32,7 @@ def app(acc, password, wsuri, broker, bankid, bankpassword):
             ws.send(login(
                 name=acc, password=password, broker=broker))
         threading.Thread(target=run, daemon=False).start()
+    ws.send(peek())
     ws.on_open = _onopen
 
     ws.send(querybank(account_cookie=acc, password=password,
