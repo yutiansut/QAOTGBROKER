@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import asyncio
-import websockets
+import websocket
 import time
 import threading
 import click
