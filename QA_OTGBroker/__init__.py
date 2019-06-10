@@ -323,6 +323,17 @@ def cancel_order(account_cookie, order_id):
     })
 
 
+def querybank(account_cookie, password, bankid, bankpassword):
+    return json.dumps({
+        "aid": "qry_bankcapital",
+        "bank_id": str(bankid),
+        "future_account": str(account_cookie),
+        "future_password": str(password),
+        "bank_password": str(bankpassword),
+        "currency": "CNY"
+    })
+
+
 def transfer(account_cookie, password, bankid, bankpassword, amount):
     return json.dumps({
         {
@@ -409,11 +420,18 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         acc1 = '131176'
-        login_1 = login(acc1, 'qchl123456')
+        acc1_password = 'qchl123456'
+        broker = 'simnow'
+        login_1 = login(broker, acc1, acc1_password)
         QA.QA_util_log_info(login_1)
+
+        # 登陆
         ws.send(login_1)
         time.sleep(1)
+        # peek
         ws.send(peek())
+
+        # ws.send(querybank(acc1,))
         for i in range(100):
             ws.sock.ping('QUANTAXIS')
             time.sleep(1)
@@ -421,3 +439,36 @@ def on_open(ws):
         ws.close()
         print("thread terminating...")
     thread.start_new_thread(run, ())
+
+
+if __name__ == "__main__":
+
+    import click
+
+    @click.command()
+    @click.option('--acc', default='133496')
+    @click.option('--password', default='QCHL1234')
+    @click.option('--wsuri', default='ws://www.yutiansut.com:7988')
+    @click.option('--broker', default='simnow')
+    @click.option('--bankid', default='')
+    @click.option('--bankpassword', default='')
+    def app(acc, password, wsuri, broker, bankid, bankpassword):
+        ws = websocket.WebSocketApp(wsuri,
+                                    on_pong=on_pong,
+                                    on_message=on_message,
+                                    on_error=on_error,
+                                    on_close=on_close)
+
+        def _onopen(ws):
+            def run():
+                ws.send(login(
+                    name=acc, password=password, broker=broker))
+            threading.Thread(target=run, daemon=False).start()
+        ws.on_open = _onopen
+
+        ws.send(querybank(account_cookie=acc, password=password,
+                          bankid=bankid, bankpassword=bankpassword))
+        time.sleep(1)
+        for i in range(100):
+            ws.sock.ping('QUANTAXIS')
+            time.sleep(1)

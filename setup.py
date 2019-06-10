@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.2',
+    version='1.3',
     description=DESCRIPTION,
     long_description='publisher and subscriber',
     classifiers=[
@@ -42,6 +42,11 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=['websocket-client', 'quantaxis>=1.1.10.dev2'],
+    entry_points={
+        'console_scripts': [
+            'QAOTG_test=quantaxis_otgbroker.app:app'
+        ]
+    },
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
