@@ -35,8 +35,8 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
             ws.send(login(
                 name=acc, password=password, broker=broker))
             ws.send(peek())
-            ws.send(querybank(account_cookie=acc, password=capitalpassword,
-                              bankid=bankid, bankpassword=bankpassword))
+            # ws.send(querybank(account_cookie=acc, password=capitalpassword,
+            #                   bankid=bankid, bankpassword=bankpassword))
         threading.Thread(target=run, daemon=False).start()
 
     ws.on_open = _onopen
@@ -45,6 +45,12 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         acc), daemon=False).start()
 
     time.sleep(1)
+
+
+    for i in range(10):
+        ws.sock.ping('QUANTAXIS')
+        time.sleep(1)
+        
     try:
         print('send query bank again')
         res = querybank(account_cookie=acc, password=capitalpassword,
@@ -55,12 +61,6 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         print('send')
     except:
         pass
-
-    for i in range(10):
-        ws.sock.ping('QUANTAXIS')
-        time.sleep(1)
-        ws.send(res)
-
 #     {
 #   "aid": "req_transfer",                                    //必填, 转账请求
 #   "future_account": "0001",                                 //必填, 期货账户
@@ -80,7 +80,7 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         pass
 
     time.sleep(1)
-    for i in range(10):
+    for i in range(100):
         print('query_again')
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
