@@ -335,17 +335,17 @@ def querybank(account_cookie, password, bankid, bankpassword):
 
 
 def transfer(account_cookie, password, bankid, bankpassword, amount):
-    return json.dumps({
+    return json.dumps(
         {
             "aid": "req_transfer",  # //必填, 转账请求
-            "future_account": account_cookie,  # //必填, 期货账户
-            "future_password": password,  # //必填, 期货账户密码
-            "bank_id": bankid,  # //必填, 银行ID
-            "bank_password": bankpassword,  # //必填, 银行账户密码
+            "future_account": str(account_cookie),  # //必填, 期货账户
+            "future_password": str(password),  # //必填, 期货账户密码
+            "bank_id": str(bankid),  # //必填, 银行ID
+            "bank_password": str(bankpassword),  # //必填, 银行账户密码
             "currency": "CNY",  # //必填, 币种代码
             "amount": float(amount)  # //必填, 转账金额, >0 表示转入期货账户, <0 表示转出期货账户
         }
-    })
+    )
 
 
 def subscribe_quote(ins_list="SHFE.cu1612,CFFEX.IF1701"):
