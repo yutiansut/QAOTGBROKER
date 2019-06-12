@@ -372,6 +372,13 @@ def login(name='131176', password='qchl1234', broker='simnow'):
     })
 
 
+def change_password(old, new):
+    return json.dumps({
+        "aid": "change_password",
+        "old_password": str(old),
+        "new_password": str(new)
+    })
+
 def ping(ws):
     return ws.ping()
 
