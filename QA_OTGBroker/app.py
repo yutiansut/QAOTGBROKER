@@ -45,16 +45,21 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         acc), daemon=False).start()
 
     time.sleep(1)
-
+    x1 = query_settlement('20190617')
+    x2 = query_settlement('20190618')
+    x3 = query_settlement('20190619')
     ws.send(query_settlement('20190619'))
     for i in range(10):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
-        ws.send(query_settlement('20190617'))
+        print(x1)
+        ws.send(x1)
         time.sleep(1)
-        ws.send(query_settlement('20190618'))
+        ws.send(x2)
+        print(x2)
         time.sleep(1)
-        ws.send(query_settlement('20190619'))
+        ws.send(x3)
+        print(x3)
         
     # try:
     #     print('send query bank again')
