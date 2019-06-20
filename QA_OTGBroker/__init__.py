@@ -374,7 +374,7 @@ def login(name='131176', password='qchl1234', broker='simnow'):
 
 def query_settlement(day):
     return json.dumps({
-        'aid': "qry_history_settlementinfo",
+        'aid': "qry_historysettlementinfo",
         "trading_day": day
     })
 
