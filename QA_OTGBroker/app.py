@@ -6,7 +6,7 @@ import time
 import threading
 import click
 import QUANTAXIS as QA
-from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek, transfer
+from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek, transfer, query_settlement
 
 
 def on_message(ws, message):
@@ -85,4 +85,5 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
         ws.send(res)
+        ws.send(query_settlement('20190620'))
     ws.close()

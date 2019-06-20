@@ -372,12 +372,20 @@ def login(name='131176', password='qchl1234', broker='simnow'):
     })
 
 
+def query_settlement(day):
+    return json.dumps({
+        'aid': "qry_history_settlementinfo",
+        "trading_day": day
+    })
+
+
 def change_password(old, new):
     return json.dumps({
         "aid": "change_password",
         "old_password": str(old),
         "new_password": str(new)
     })
+
 
 def ping(ws):
     return ws.ping()
@@ -403,7 +411,7 @@ class ORDER_TYPE():
 
 def on_message(ws, message):
     QA.QA_util_log_info(message)
-    #ws.send(peek())
+    # ws.send(peek())
 
 
 def on_ping(ws, message):
@@ -480,3 +488,4 @@ if __name__ == "__main__":
         for i in range(100):
             ws.sock.ping('QUANTAXIS')
             time.sleep(1)
+            # ws.send(query_settlement())
