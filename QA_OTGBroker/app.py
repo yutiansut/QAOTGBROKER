@@ -46,21 +46,26 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
 
     time.sleep(1)
 
-
+    ws.send(query_settlement('20190619'))
     for i in range(10):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
+        ws.send(query_settlement('20190617'))
+        time.sleep(1)
+        ws.send(query_settlement('20190618'))
+        time.sleep(1)
+        ws.send(query_settlement('20190619'))
         
-    try:
-        print('send query bank again')
-        res = querybank(account_cookie=acc, password=capitalpassword,
-                        bankid=bankid, bankpassword=bankpassword)
-        print(res)
+    # try:
+    #     print('send query bank again')
+    #     res = querybank(account_cookie=acc, password=capitalpassword,
+    #                     bankid=bankid, bankpassword=bankpassword)
+    #     print(res)
 
-        ws.send(res)
-        print('send')
-    except:
-        pass
+    #     ws.send(res)
+    #     print('send')
+    # except:
+    #     pass
 #     {
 #   "aid": "req_transfer",                                    //必填, 转账请求
 #   "future_account": "0001",                                 //必填, 期货账户
@@ -70,20 +75,20 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
 #   "currency": "CNY",                                        //必填, 币种代码
 #   "amount": 135.4                                           //必填, 转账金额, >0 表示转入期货账户, <0 表示转出期货账户
 # }
-    try:
-        print('prepare to transfer')
-        # ws.send(transfer(account_cookie=acc, password=capitalpassword,
-        #                  bankid=bankid, bankpassword=bankpassword, amount=-200))
-        ws.send(peek())
-    except Exception as e:
-        print(e)
-        pass
+    # try:
+    #     print('prepare to transfer')
+    #     # ws.send(transfer(account_cookie=acc, password=capitalpassword,
+    #     #                  bankid=bankid, bankpassword=bankpassword, amount=-200))
+    #     ws.send(peek())
+    # except Exception as e:
+    #     print(e)
+    #     pass
 
     time.sleep(1)
     for i in range(100):
         print('query_again')
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
-        ws.send(res)
-        ws.send(query_settlement('20190620'))
+        #ws.send(res)
+        
     ws.close()
