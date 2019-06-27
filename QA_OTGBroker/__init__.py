@@ -363,12 +363,19 @@ def peek():
         })
 
 
-def login(name='131176', password='qchl1234', broker='simnow'):
+def login(name, password, broker):
     return json.dumps({
         "aid": "req_login",
         "bid": str(broker),
         "user_name": str(name),
         "password": str(password),
+    })
+
+
+def query_settlement(day):
+    return json.dumps({
+        'aid': "qry_settlement_info",
+        "trading_day": day
     })
 
 
@@ -378,6 +385,7 @@ def change_password(old, new):
         "old_password": str(old),
         "new_password": str(new)
     })
+
 
 def ping(ws):
     return ws.ping()
@@ -403,7 +411,6 @@ class ORDER_TYPE():
 
 def on_message(ws, message):
     QA.QA_util_log_info(message)
-    #ws.send(peek())
 
 
 def on_ping(ws, message):
@@ -447,36 +454,3 @@ def on_open(ws):
         ws.close()
         print("thread terminating...")
     thread.start_new_thread(run, ())
-
-
-if __name__ == "__main__":
-
-    import click
-
-    @click.command()
-    @click.option('--acc', default='133496')
-    @click.option('--password', default='QCHL1234')
-    @click.option('--wsuri', default='ws://www.yutiansut.com:7988')
-    @click.option('--broker', default='simnow')
-    @click.option('--bankid', default='')
-    @click.option('--bankpassword', default='')
-    def app(acc, password, wsuri, broker, bankid, bankpassword):
-        ws = websocket.WebSocketApp(wsuri,
-                                    on_pong=on_pong,
-                                    on_message=on_message,
-                                    on_error=on_error,
-                                    on_close=on_close)
-
-        def _onopen(ws):
-            def run():
-                ws.send(login(
-                    name=acc, password=password, broker=broker))
-            threading.Thread(target=run, daemon=False).start()
-        ws.on_open = _onopen
-
-        ws.send(querybank(account_cookie=acc, password=password,
-                          bankid=bankid, bankpassword=bankpassword))
-        time.sleep(1)
-        for i in range(100):
-            ws.sock.ping('QUANTAXIS')
-            time.sleep(1)
