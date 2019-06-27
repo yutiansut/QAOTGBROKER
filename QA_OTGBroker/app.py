@@ -15,14 +15,14 @@ def on_message(ws, message):
 
 
 @click.command()
-@click.option('--acc', default='133496')
-@click.option('--password', default='QCHL1234')
-@click.option('--wsuri', default='ws://www.yutiansut.com:7988')
-@click.option('--broker', default='simnow')
-@click.option('--bankid', default='')
-@click.option('--bankpassword', default='')
-@click.option('--bankid', default='')
-@click.option('--capitalpassword', default='')
+@click.option('--acc', )
+@click.option('--password', )
+@click.option('--wsuri',)
+@click.option('--broker',)
+@click.option('--bankid')
+@click.option('--bankpassword')
+@click.option('--bankid')
+@click.option('--capitalpassword')
 def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
     ws = websocket.WebSocketApp(wsuri,
                                 on_pong=on_pong,
@@ -60,40 +60,12 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         time.sleep(1)
         ws.send(x3)
         print(x3)
-        
-    # try:
-    #     print('send query bank again')
-    #     res = querybank(account_cookie=acc, password=capitalpassword,
-    #                     bankid=bankid, bankpassword=bankpassword)
-    #     print(res)
-
-    #     ws.send(res)
-    #     print('send')
-    # except:
-    #     pass
-#     {
-#   "aid": "req_transfer",                                    //必填, 转账请求
-#   "future_account": "0001",                                 //必填, 期货账户
-#   "future_password": "0001",                                //必填, 期货账户密码
-#   "bank_id": "0001",                                        //必填, 银行ID
-#   "bank_password": "0001",                                  //必填, 银行账户密码
-#   "currency": "CNY",                                        //必填, 币种代码
-#   "amount": 135.4                                           //必填, 转账金额, >0 表示转入期货账户, <0 表示转出期货账户
-# }
-    # try:
-    #     print('prepare to transfer')
-    #     # ws.send(transfer(account_cookie=acc, password=capitalpassword,
-    #     #                  bankid=bankid, bankpassword=bankpassword, amount=-200))
-    #     ws.send(peek())
-    # except Exception as e:
-    #     print(e)
-    #     pass
 
     time.sleep(1)
     for i in range(100):
         print('query_again')
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
-        #ws.send(res)
-        
+        # ws.send(res)
+
     ws.close()
