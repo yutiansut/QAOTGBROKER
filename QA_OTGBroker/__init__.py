@@ -352,7 +352,7 @@ def transfer(account_cookie, password, bankid, bankpassword, amount):
 
 
 def subscribe_quote(ins_list="SHFE.cu1612,CFFEX.IF1701"):
-    return json.loads(
+    return json.dumps(
         {
             "aid": "subscribe_quote",  # // 必填, 请求订阅实时报价数据
             "ins_list": ins_list  # // 必填, 需要订阅的合约列表，以逗号分隔

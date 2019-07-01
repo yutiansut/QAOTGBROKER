@@ -6,7 +6,7 @@ import time
 import threading
 import click
 import QUANTAXIS as QA
-from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek, transfer, query_settlement
+from QA_OTGBroker import on_pong, on_error, on_close, querybank, login, peek, transfer, query_settlement, subscribe_quote
 
 
 def on_message(ws, message):
@@ -47,6 +47,8 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
     time.sleep(1)
     # x1 = query_settlement('20190617')
     # x2 = query_settlement('20190618')
+    ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
+
     x3 = query_settlement(20190619)
     ws.send(query_settlement('20190619'))
     for i in range(10):
@@ -55,12 +57,12 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         ws.send(x3)
         print(x3)
 
-    time.sleep(1)
-    for i in range(100):
-        print('query_again')
-        ws.sock.ping('QUANTAXIS')
-        time.sleep(1)
-        ws.send(x3)
-        # ws.send(res)
+    # time.sleep(1)
+    # for i in range(100):
+    #     print('query_again')
+    #     ws.sock.ping('QUANTAXIS')
+    #     time.sleep(1)
+    #     ws.send(x3)
+    #     # ws.send(res)
 
     ws.close()
