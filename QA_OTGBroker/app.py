@@ -55,15 +55,6 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
         ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
-        #ws.send(x3)
-        #print(x3)
 
-    # time.sleep(1)
-    # for i in range(100):
-    #     print('query_again')
-    #     ws.sock.ping('QUANTAXIS')
-    #     time.sleep(1)
-    #     ws.send(x3)
-    #     # ws.send(res)
 
     ws.close()
