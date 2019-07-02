@@ -49,13 +49,14 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
     # x2 = query_settlement('20190618')
     ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
 
-    x3 = query_settlement(20190619)
-    ws.send(query_settlement('20190619'))
+    #x3 = query_settlement(20190619)
+    #ws.send(query_settlement('20190619'))
     for i in range(10):
         ws.sock.ping('QUANTAXIS')
         time.sleep(1)
-        ws.send(x3)
-        print(x3)
+        ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
+        #ws.send(x3)
+        #print(x3)
 
     # time.sleep(1)
     # for i in range(100):
