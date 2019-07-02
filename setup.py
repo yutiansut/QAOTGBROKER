@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.6',
+    version='1.8',
     description=DESCRIPTION,
     long_description='publisher and subscriber',
     classifiers=[
@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['websocket-client', 'quantaxis>=1.1.10.dev2'],
+    install_requires=['websocket-client', 'quantaxis>=1.5.3'],
     entry_points={
         'console_scripts': [
             'QAOTG_test=QA_OTGBroker.app:app'
