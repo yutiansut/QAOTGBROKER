@@ -19,8 +19,6 @@ class MARKET_SUBSCRIBER(QA_Thread):
 
         def _onopen(ws):
             def run():
-                # ws.send(login(
-                # name=133496, password='QCHL1234', broker='simnow'))
                 ws.send(subscribe_quote('SHFE.rb1910,DCE.j909'))
                 ws.send(peek())
             threading.Thread(target=run, daemon=False).start()
