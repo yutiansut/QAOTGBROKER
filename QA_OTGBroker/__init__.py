@@ -278,7 +278,10 @@ notify
 """
 
 
-def send_order(account_cookie, order_direction='BUY', order_offset='OPEN', volume=1, order_id=False, code='rb1905', exchange_id='SHFE', price=3925):
+def send_order(account_cookie, order_direction='BUY', order_offset='OPEN',
+               volume=1, order_id=False, code='rb1905', exchange_id='SHFE',
+               price=3925, price_type='LIMIT', volume_condition='ANY',
+               time_condition='GFD'):
     """[summary]
 
     Arguments:
@@ -308,10 +311,10 @@ def send_order(account_cookie, order_direction='BUY', order_offset='OPEN', volum
         # //必填, 下单开平方向, 仅当指令相关对象不支持开平机制(例如股票)时可不填写此字段
         "offset":  order_offset,
         "volume":  volume,                             # //必填, 下单手数
-        "price_type": "LIMIT",  # //必填, 报单价格类型
+        "price_type": price_type,  # //必填, 报单价格类型
         "limit_price": price,  # //当 price_type == LIMIT 时需要填写此字段, 报单价格
-        "volume_condition": "ANY",
-        "time_condition": "GFD",
+        "volume_condition": volume_condition,
+        "time_condition": time_condition,
     })
 
 
@@ -349,7 +352,7 @@ def transfer(account_cookie, password, bankid, bankpassword, amount):
 
 
 def subscribe_quote(ins_list="SHFE.cu1612,CFFEX.IF1701"):
-    return json.loads(
+    return json.dumps(
         {
             "aid": "subscribe_quote",  # // 必填, 请求订阅实时报价数据
             "ins_list": ins_list  # // 必填, 需要订阅的合约列表，以逗号分隔
