@@ -31,7 +31,7 @@ class MARKET_SUBSCRIBER(QA_Thread):
 
     def on_message(self, message):
         print(message)
-        self.ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
+        #self.ws.send(subscribe_quote('SHFE.rb1910,DCE.j1909'))
         self.ws.send(peek())
 
     def run(self):
