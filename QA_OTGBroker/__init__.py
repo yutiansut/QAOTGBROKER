@@ -1,6 +1,7 @@
 import websocket
 import json
 import QUANTAXIS as QA
+from QA_OTGBroker.syscollect import get_system_info
 try:
     import thread
 except ImportError:
@@ -366,13 +367,21 @@ def peek():
         })
 
 
-def login(name, password, broker):
-    return json.dumps({
-        "aid": "req_login",
-        "bid": str(broker),
-        "user_name": str(name),
-        "password": str(password),
-    })
+def login(name, password, broker, appid=''):
+    """
+    """
+    login = {
+          "aid": "req_login",
+          "bid": str(broker),
+          "user_name": str(name),
+          "password": str(password)
+          }
+    if appid:
+        appid, systeminfo = get_system_info()
+        login["client_app_id"] = appid
+        login["client_system_info"] = systeminfo
+
+    return json.dumps(login)
 
 
 def query_settlement(day):

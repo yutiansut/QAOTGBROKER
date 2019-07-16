@@ -32,8 +32,10 @@ def app(acc, password, wsuri, broker, bankid, bankpassword, capitalpassword):
 
     def _onopen(ws):
         def run():
-            ws.send(login(
-                name=acc, password=password, broker=broker))
+            x = login(
+                name=acc, password=password, broker=broker, appid='1')
+            print(x)
+            ws.send(x)
             ws.send(peek())
             # ws.send(querybank(account_cookie=acc, password=capitalpassword,
             #                   bankid=bankid, bankpassword=bankpassword))
